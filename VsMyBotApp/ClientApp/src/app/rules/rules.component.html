@@ -1,0 +1,106 @@
+
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title">How to play The Resistance</h3>
+        <div class="restistanceCard" *ngIf="cardNumber === 0">
+
+            <h5 class="card-title">Card title START</h5>
+            <p class="card-text">
+                Some quick example text to build on the card title and make up the bulk of the
+                card's content.
+            </p>
+
+            <button type="button" class="btn btn-primary" (click)="incrementCardNum()">Next</button>
+        </div>
+        <div class="restistanceCard" *ngIf="cardNumber === 1">
+            <h5 class="card-title">Card title2</h5>
+            <p class="card-text">
+                Some quick example text to build on the card title and make up the bulk of the
+                card's content.
+            </p>
+
+            <button type="button" class="btn btn-primary" (click)="deductCardNum()">Previous</button>
+            <button type="button" class="btn btn-primary" (click)="incrementCardNum()">Next</button>
+        </div>
+        <div class="restistanceCard" *ngIf="cardNumber === 2">
+            <h5 class="card-title">Card title FINAL</h5>
+            <p class="card-text">
+                Some quick example text to build on the card title and make up the bulk of the
+                card's content.
+            </p>
+
+            <button type="button" class="btn btn-primary" (click)="deductCardNum()">Previous</button>
+
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+       <h3 class="card-title">How to play as the Resistance</h3>
+        <div class="restistanceCard" *ngIf="resCardNumber === 0">
+
+            <h5 class="card-title">Card title START</h5>
+            <p class="card-text">
+                Some quick example text to build on the card title and make up the bulk of the
+                card's content.
+            </p>
+
+            <button type="button" class="btn btn-primary" (click)="incrementResCardNum()">Next</button>
+        </div>
+        <div class="restistanceCard" *ngIf="resCardNumber === 1">
+            <h5 class="card-title">Card title2</h5>
+            <p class="card-text">
+                Some quick example text to build on the card title and make up the bulk of the
+                card's content.
+            </p>
+
+            <button type="button" class="btn btn-primary" (click)="deductResCardNum()">Previous</button>
+            <button type="button" class="btn btn-primary" (click)="incrementResCardNum()">Next</button>
+        </div>
+        <div class="restistanceCard" *ngIf="resCardNumber === 2">
+            <h5 class="card-title">Card title FINAL</h5>
+            <p class="card-text">
+                Some quick example text to build on the card title and make up the bulk of the
+                card's content.
+            </p>
+
+            <button type="button" class="btn btn-primary" (click)="deductResCardNum()">Previous</button>
+
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title">How to play as the Spy</h3>
+        <div class="restistanceCard" *ngIf="spyCardNumber === 0">
+
+            <h5 class="card-title">Card title START</h5>
+            <p class="card-text">
+                Some quick example text to build on the card title and make up the bulk of the
+                card's content.
+            </p>
+
+            <button type="button" class="btn btn-primary" (click)="incrementSpyCardNum()">Next</button>
+        </div>
+        <div class="restistanceCard" *ngIf="spyCardNumber === 1">
+            <h5 class="card-title">Card title2</h5>
+            <p class="card-text">
+                Some quick example text to build on the card title and make up the bulk of the
+                card's content.
+            </p>
+
+            <button type="button" class="btn btn-primary" (click)="deductSpyCardNum()">Previous</button>
+            <button type="button" class="btn btn-primary" (click)="incrementSpyCardNum()">Next</button>
+        </div>
+        <div class="restistanceCard" *ngIf="spyCardNumber === 2">
+            <h5 class="card-title">Card title FINAL</h5>
+            <p class="card-text">
+                Some quick example text to build on the card title and make up the bulk of the
+                card's content.
+            </p>
+
+            <button type="button" class="btn btn-primary" (click)="deductSpyCardNum()">Previous</button>
+
+        </div>
+    </div>
+</div>
