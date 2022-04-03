@@ -1,8 +1,9 @@
+<div *ngIf="!gameStarted">
 <form [formGroup]="gameSetupForm" autocomplete="off" novalidate (ngSubmit)="setupNewGame(gameSetupForm.value)">
     <div>
         <label for="botNumber">How many bots would you like to face?</label>
         <input type="number" id="botNumber" formControlName="botNumber" class="form-control"
-               min="4" max="9"/>
+               min="4" max="9"  onKeyDown="return false" />
     </div>
     <div>
         <em *ngIf="validateControl('botNumber') && hasError('botNumber','required')">Bot Number is Required</em>
@@ -10,17 +11,68 @@
     <div>
         <label for="playersTeam">What team would you like to be a part of?</label>
         <select formControlName="playersTeam">
-            
+
             <option value="Random">Random</option>
-            <option value="Resitance">Resistance</option>
+            <option value="Resistance">Resistance</option>
             <option value="Spies">Spies</option>
         </select>
     </div>
     <div>
         <em *ngIf="validateControl('playersTeam') && hasError('playersTeam','required')">Must Choose a Team</em>
     </div>
-    <br/>
+    <br />
     <div>
         <button type="submit" [disabled]="!gameSetupForm.valid">Start</button>
     </div>
 </form>
+</div>
+<div *ngIf="gameStarted">
+
+    <div *ngFor="let boardPiece of existingTurnOrders.slice(0,existingTurnOrders.length/2)">
+        <div *ngIf="playersObj.team === 'Spies'">
+            <div [style.background]="(playerData[boardPiece].team === 'Spies') ? 'red':'blue'">
+                {{playerData[boardPiece].name}}
+            </div>
+        </div>
+        <div *ngIf="playersObj.team === 'Resistance'">
+            <div>
+                {{playerData[boardPiece].name}}
+            </div>
+        </div>
+
+    </div>
+    <div>
+        <div>
+            Mission 1
+        </div>
+        <div>
+            Mission 2
+        </div>
+        <div>
+            Mission 3
+        </div>
+        <div *ngIf="existingTurnOrders.length>6">
+            Two Fails Required
+            Mission 4
+        </div>
+        <div *ngIf="existingTurnOrders.length<7">
+            Mission 4
+        </div>
+        <div>
+            Mission 5
+        </div>
+    </div>
+    <div *ngFor="let boardPiece of existingTurnOrders.slice(-existingTurnOrders.length/2)">
+        <div *ngIf="playersObj.team === 'Spies'">
+            <div [style.background]="(playerData[boardPiece].team === 'Spies') ? 'red':'blue'">
+                {{playerData[boardPiece].name}}
+            </div>
+        </div>
+        <div *ngIf="playersObj.team === 'Resistance'">
+            <div>
+                {{playerData[boardPiece].name}}
+            </div>
+        </div>
+
+    </div>
+</div>
