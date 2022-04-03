@@ -1,1 +1,26 @@
-<p>the-game-setup works!</p>
+<form [formGroup]="gameSetupForm" autocomplete="off" novalidate (ngSubmit)="setupNewGame(gameSetupForm.value)">
+    <div>
+        <label for="botNumber">How many bots would you like to face?</label>
+        <input type="number" id="botNumber" formControlName="botNumber" class="form-control"
+               min="4" max="9"/>
+    </div>
+    <div>
+        <em *ngIf="validateControl('botNumber') && hasError('botNumber','required')">Bot Number is Required</em>
+    </div>
+    <div>
+        <label for="playersTeam">What team would you like to be a part of?</label>
+        <select formControlName="playersTeam">
+            
+            <option value="Random">Random</option>
+            <option value="Resitance">Resistance</option>
+            <option value="Spies">Spies</option>
+        </select>
+    </div>
+    <div>
+        <em *ngIf="validateControl('playersTeam') && hasError('playersTeam','required')">Must Choose a Team</em>
+    </div>
+    <br/>
+    <div>
+        <button type="submit" [disabled]="!gameSetupForm.valid">Start</button>
+    </div>
+</form>

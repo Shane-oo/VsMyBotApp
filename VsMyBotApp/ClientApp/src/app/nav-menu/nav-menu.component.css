@@ -17,3 +17,13 @@ html {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
+#myNav {
+    background-color:#111111;
+}
+#navTitle {
+    color:#F6F6F6;
+
+}
+#NavItem {
+  color: #FFCB74;
+}

@@ -11,6 +11,7 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { RulesComponent } from './rules/rules.component';
 import { TheGameSetupComponent } from '../the-game-setup/the-game-setup.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,11 +27,12 @@ import { TheGameSetupComponent } from '../the-game-setup/the-game-setup.componen
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'rules', component: RulesComponent }.
+      { path: 'rules', component: RulesComponent },
       { path: 'game-setup', component: TheGameSetupComponent }
     ])
   ],
