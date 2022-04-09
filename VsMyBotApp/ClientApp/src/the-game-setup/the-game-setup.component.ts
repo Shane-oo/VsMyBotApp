@@ -11,14 +11,28 @@ import { TheGameService } from '../shared/services/the-game.service';
 })
 export class TheGameSetupComponent implements OnInit {
   public gameSetupForm!: FormGroup;
-  public Teams:string[]= ["Random", "Resitance", "Spies"];
+  public Teams: string[] = ["Random", "Resitance", "Spies"];
+  public MissionNumbers: number[] = [];
+  public MissionOneMembers: PlayerPiece[] = [];
+  public MissionTwoMembers: PlayerPiece[] = [];
+  public MissionThreeMembers: PlayerPiece[] = [];
+  public MissionFourMembers: PlayerPiece[] = [];
+  public MissionFiveMembers: PlayerPiece[] = [];
+  public CurrentMission: number = 0;
+
+
   public gameStarted!: boolean;
-  public playerData: PlayerPiece[]=[];
+  public playerData: PlayerPiece[] = [];
+  public topHalf: PlayerPiece[] = [];
+  public bottomHalf: PlayerPiece[] = [];
+  public half: number = 0;
   public spyNumber: number = 0;
   public resistanceNumber: number = 0;
   public existingTurnOrders: number[] = [];
   public playersObj!: PlayerPiece;
-  public randomNames:string[]= ["Shane", "Chloe", "Hamish", "Ciaran", "Brandon", "Geemal", "Maya", "Natalie", "Jaeley"];
+  public randomNames: string[] = ["Shane", "Chloe", "Hamish", "Ciaran", "Brandon", "Geemal", "Maya", "Natalie", "Jaeley"];
+
+  public playerIsMissionLeader: boolean = false;
   constructor(private _gameService: TheGameService) { }
 
   ngOnInit(): void {
@@ -41,6 +55,28 @@ export class TheGameSetupComponent implements OnInit {
   public setupNewGame = (gameSetupFormValue: any) => {
     const formValues = { ...gameSetupFormValue };
     this.determinePlayOrder(formValues);
+
+    // Set First player going first to be mission leader
+    for (var i = 0; i < this.playerData.length; i++) {
+      if (this.playerData[i].playerTurn == 0) {
+        this.playerData[i].missionLeader = true;
+      }
+    }
+    // order player data by turn order
+    this.playerData = this.playerData.sort(({ playerTurn: a }, { playerTurn: b }) => a - b);
+    console.log(this.playerData);
+
+    this.half = Math.ceil(this.playerData.length / 2);
+
+    for (var i = 0; i < this.playerData.length; i++) {
+      if (i < this.half) {
+        this.topHalf.push(this.playerData[i]);
+      }
+      else {
+        this.bottomHalf.push(this.playerData[i]);
+      }
+    }
+    this.checkPlayerIsMissionLeader();
     this.gameStarted = true;
   }
 
@@ -55,6 +91,10 @@ export class TheGameSetupComponent implements OnInit {
     player.playerTurn = this.getRandomInt(playersChoices.botNumber);
     player.team = playersChoices.playersTeam;
     player.name = "Player";
+
+    player.missionLeader = true;
+
+    player.onMission = false;
     this.playerData.push(player);
     // Add to taken turn number
     this.existingTurnOrders.push(player.playerTurn);
@@ -72,6 +112,8 @@ export class TheGameSetupComponent implements OnInit {
       bot.playerTurn = this.getRandomIntForBot(playersChoices.botNumber);
       bot.team = this.decideBotsTeam(playersChoices.botNumber, player.team);
       bot.name = "Bot-" + this.randomNames[i];
+      bot.missionLeader = false;
+      bot.onMission = false;
       this.playerData.push(bot);
     }
     console.log(this.playerData);
@@ -109,10 +151,86 @@ export class TheGameSetupComponent implements OnInit {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+
+  // Check to see if the player has been assigned as the mission leader
+  checkPlayerIsMissionLeader() {
+    for (var i = 0; i < this.playerData.length; i++) {
+      if (this.playerData[i].name === "Player" && this.playerData[i].missionLeader) {
+        this.playerIsMissionLeader = true;
+        break;
+      }
+      else {
+        this.playerIsMissionLeader = false;
+      }
+    }
+  }
+  selectedTeamMember(boardPiece: PlayerPiece) {
+    if (this.CurrentMission == 0) {
+      if (this.MissionOneMembers.length < this.MissionNumbers[this.CurrentMission]) {
+        if (!this.MissionOneMembers.find(peice => peice == boardPiece)) {
+
+          this.MissionOneMembers.push(boardPiece);
+        }
+      }
+    }
+    else if (this.CurrentMission == 1) {
+      if (this.MissionTwoMembers.length < this.MissionNumbers[this.CurrentMission]) {
+        if (!this.MissionTwoMembers.find(peice => peice == boardPiece)) {
+
+          this.MissionTwoMembers.push(boardPiece);
+        }
+      }
+    }
+    else if (this.CurrentMission == 2) {
+      if (this.MissionThreeMembers.length < this.MissionNumbers[this.CurrentMission]) {
+        if (!this.MissionThreeMembers.find(peice => peice == boardPiece)) {
+
+          this.MissionThreeMembers.push(boardPiece);
+        }
+      }
+    }
+    else if (this.CurrentMission == 3) {
+      if (this.MissionFourMembers.length < this.MissionNumbers[this.CurrentMission]) {
+        if (!this.MissionFourMembers.find(peice => peice == boardPiece)) {
+
+          this.MissionFourMembers.push(boardPiece);
+        }
+      }
+    }
+    else if (this.CurrentMission == 4) {
+      if (this.MissionFiveMembers.length < this.MissionNumbers[this.CurrentMission]) {
+        if (!this.MissionFiveMembers.find(peice => peice == boardPiece)) {
+
+          this.MissionFiveMembers.push(boardPiece);
+        }
+      }
+    } 
+  }
+
+  RemoveFromMission(removedPlayer: PlayerPiece) {
+    if (this.CurrentMission == 0) {
+      this.MissionOneMembers = this.MissionOneMembers.filter((member) => member !== removedPlayer);
+    }
+    if (this.CurrentMission == 1) {
+      this.MissionTwoMembers = this.MissionTwoMembers.filter((member) => member !== removedPlayer);
+    }
+    if (this.CurrentMission == 2) {
+      this.MissionThreeMembers = this.MissionThreeMembers.filter((member) => member !== removedPlayer);
+    }
+    if (this.CurrentMission == 3) {
+      this.MissionFourMembers = this.MissionFourMembers.filter((member) => member !== removedPlayer);
+    } 
+    if (this.CurrentMission == 4) {
+      this.MissionFiveMembers = this.MissionFiveMembers.filter((member) => member !== removedPlayer);
+    }
+  }
+
+
   decideBotsTeam(botNumbers: number, playersTeam: string): string{
     let randomTeam = this.getRandomTeam();
     switch (botNumbers) {
       case 4:
+        this.MissionNumbers = [2, 3, 2, 3, 3];
         if (randomTeam === "Resistance" && this.resistanceNumber < 3) {
           this.resistanceNumber++;
           return "Resistance"
@@ -131,6 +249,7 @@ export class TheGameSetupComponent implements OnInit {
         }
         break;
       case 5:
+        this.MissionNumbers = [2, 3, 4, 3, 4];
         if (randomTeam === "Resistance" && this.resistanceNumber < 4) {
           this.resistanceNumber++;
           return "Resistance"
@@ -149,6 +268,7 @@ export class TheGameSetupComponent implements OnInit {
         }
         break;
       case 6:
+        this.MissionNumbers = [2, 3, 3, 4, 4];
         if (randomTeam === "Resistance" && this.resistanceNumber < 4) {
           this.resistanceNumber++;
           return "Resistance"
@@ -167,6 +287,7 @@ export class TheGameSetupComponent implements OnInit {
         }
         break;
       case 7:
+        this.MissionNumbers = [3, 4, 4, 5, 5];
         if (randomTeam === "Resistance" && this.resistanceNumber < 5) {
           this.resistanceNumber++;
           return "Resistance"
@@ -185,6 +306,7 @@ export class TheGameSetupComponent implements OnInit {
         }
         break;
       case 8:
+        this.MissionNumbers = [3, 4, 4, 5, 5];
         if (randomTeam === "Resistance" && this.resistanceNumber < 6) {
           this.resistanceNumber++;
           return "Resistance"
@@ -203,6 +325,7 @@ export class TheGameSetupComponent implements OnInit {
         }
         break;
       case 9:
+        this.MissionNumbers = [3, 4, 4, 5, 5];
         if (randomTeam === "Resistance" && this.resistanceNumber < 6) {
           this.resistanceNumber++;
           return "Resistance"
