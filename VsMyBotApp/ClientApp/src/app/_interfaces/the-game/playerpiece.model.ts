@@ -4,4 +4,8 @@ export interface PlayerPiece {
   name: string;
   missionLeader: boolean;
   onMission: boolean;
+
+  // Machine learning Data
+  resistanceData: number[];
+
 }

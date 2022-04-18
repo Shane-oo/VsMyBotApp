@@ -64,14 +64,25 @@
                 <h6>Mission Size: {{MissionNumbers[0]}}</h6>
                 <div class="ProposeTeam" *ngFor="let teamMember of MissionOneMembers">
                     <h6>{{teamMember.name}}</h6>
-                    
-                    <button  *ngIf="playerIsMissionLeader && CurrentMission==0" type="button" class="btn btn-outline-danger" (click)="RemoveFromMission(teamMember)">X</button>
+
+                    <button *ngIf="playerIsMissionLeader && CurrentMission==0 && !isVotingStage" type="button" class="btn btn-outline-danger" (click)="RemoveFromMission(teamMember)">X</button>
                 </div>
 
-                <div *ngIf="MissionOneMembers.length==MissionNumbers[CurrentMission] && playerIsMissionLeader && CurrentMission==0">
-                    <button type="button" class="btn btn-success">Confirm Team</button>
+                <div *ngIf="MissionOneMembers.length==MissionNumbers[CurrentMission] && playerIsMissionLeader && CurrentMission==0 && !isVotingStage">
+                    <button type="button" class="btn btn-success" (click)="ConfirmTeam(MissionOneMembers)">Confirm Team</button>
                 </div>
-
+                <div *ngIf="isVotingStage && !showVotes">
+                    <button type="button" class="btn btn-success" (click)="VoteYes()" style="width:100%;">Agree</button>
+                    <button type="button" class="btn btn-danger" (click)="VoteNo()" style="width:100%;">Disagree</button>
+                </div>
+                <div *ngIf="isVotingStage && showVotes" class="VoteResults">
+                    <div>
+                        Voted For
+                    </div>
+                    <div>
+                        Voted Against
+                    </div>
+                </div>
             </div>
             <div class="MissionPiece">
                 Mission 2
@@ -79,11 +90,11 @@
                 <div class="ProposeTeam" *ngFor="let teamMember of MissionTwoMembers">
                     {{teamMember.name}}
 
-                    <button *ngIf="playerIsMissionLeader && CurrentMission==1" type="button" class="btn btn-outline-danger" (click)="RemoveFromMission(teamMember)">X</button>
+                    <button *ngIf="playerIsMissionLeader && CurrentMission==1 && !isVotingStage" type="button" class="btn btn-outline-danger" (click)="RemoveFromMission(teamMember)">X</button>
                 </div>
 
-                <div *ngIf="MissionTwoMembers.length==MissionNumbers[CurrentMission] && playerIsMissionLeader && CurrentMission==1">
-                    <button type="button" class="btn btn-success">Confirm Team</button>
+                <div *ngIf="MissionTwoMembers.length==MissionNumbers[CurrentMission] && playerIsMissionLeader && CurrentMission==1 && !isVotingStage">
+                    <button type="button" class="btn btn-success" (click)="ConfirmTeam(MissionTwoMembers)">Confirm Team</button>
                 </div>
 
             </div>
@@ -93,11 +104,11 @@
                 <div class="ProposeTeam" *ngFor="let teamMember of MissionThreeMembers">
                     {{teamMember.name}}
 
-                    <button *ngIf="playerIsMissionLeader && CurrentMission==2" type="button" class="btn btn-outline-danger" (click)="RemoveFromMission(teamMember)">X</button>
+                    <button *ngIf="playerIsMissionLeader && CurrentMission==2 && !isVotingStage" type="button" class="btn btn-outline-danger" (click)="RemoveFromMission(teamMember)">X</button>
                 </div>
 
-                <div *ngIf="MissionThreeMembers.length==MissionNumbers[CurrentMission] && playerIsMissionLeader && CurrentMission==2">
-                    <button type="button" class="btn btn-success">Confirm Team</button>
+                <div *ngIf="MissionThreeMembers.length==MissionNumbers[CurrentMission] && playerIsMissionLeader && CurrentMission==2 && !isVotingStage">
+                    <button type="button" class="btn btn-success" (click)="ConfirmTeam(MissionThreeMembers)">Confirm Team</button>
                 </div>
 
             </div>
@@ -110,11 +121,11 @@
                 <div class="ProposeTeam" *ngFor="let teamMember of MissionFourMembers">
                     {{teamMember.name}}
 
-                    <button *ngIf="playerIsMissionLeader && CurrentMission==3" type="button" class="btn btn-outline-danger" (click)="RemoveFromMission(teamMember)">X</button>
+                    <button *ngIf="playerIsMissionLeader && CurrentMission==3 && !isVotingStage" type="button" class="btn btn-outline-danger" (click)="RemoveFromMission(teamMember)">X</button>
                 </div>
 
-                <div *ngIf="MissionFourMembers.length==MissionNumbers[CurrentMission] && playerIsMissionLeader && CurrentMission==3">
-                    <button type="button" class="btn btn-success">Confirm Team</button>
+                <div *ngIf="MissionFourMembers.length==MissionNumbers[CurrentMission] && playerIsMissionLeader && CurrentMission==3 && !isVotingStage">
+                    <button type="button" class="btn btn-success" (click)="ConfirmTeam(MissionFourMembers)" >Confirm Team</button>
                 </div>
 
             </div>
@@ -124,11 +135,11 @@
                 <div class="ProposeTeam" *ngFor="let teamMember of MissionFourMembers">
                     {{teamMember.name}}
 
-                    <button *ngIf="playerIsMissionLeader && CurrentMission==3" type="button" class="btn btn-outline-danger" (click)="RemoveFromMission(teamMember)">X</button>
+                    <button *ngIf="playerIsMissionLeader && CurrentMission==3 && !isVotingStage" type="button" class="btn btn-outline-danger" (click)="RemoveFromMission(teamMember)">X</button>
                 </div>
 
-                <div *ngIf="MissionFourMembers.length==MissionNumbers[CurrentMission] && playerIsMissionLeader && CurrentMission==3">
-                    <button type="button" class="btn btn-success">Confirm Team</button>
+                <div *ngIf="MissionFourMembers.length==MissionNumbers[CurrentMission] && playerIsMissionLeader && CurrentMission==3 && !isVotingStage">
+                    <button type="button" class="btn btn-success"  (click)="ConfirmTeam(MissionFourMembers)" >Confirm Team</button>
                 </div>
 
             </div>
@@ -138,11 +149,11 @@
                 <div class="ProposeTeam" *ngFor="let teamMember of MissionFiveMembers">
                     {{teamMember.name}}
 
-                    <button *ngIf="playerIsMissionLeader && CurrentMission==4" type="button" class="btn btn-outline-danger" (click)="RemoveFromMission(teamMember)">X</button>
+                    <button *ngIf="playerIsMissionLeader && CurrentMission==4 && !isVotingStage" type="button" class="btn btn-outline-danger" (click)="RemoveFromMission(teamMember)">X</button>
                 </div>
 
-                <div *ngIf="MissionFiveMembers.length==MissionNumbers[CurrentMission] && playerIsMissionLeader && CurrentMission==4">
-                    <button type="button" class="btn btn-success">Confirm Team</button>
+                <div *ngIf="MissionFiveMembers.length==MissionNumbers[CurrentMission] && playerIsMissionLeader && CurrentMission==4  && !isVotingStage">
+                    <button type="button" class="btn btn-success"  (click)="ConfirmTeam(MissionFiveMembers)" >Confirm Team</button>
                 </div>
             </div>
         </div>

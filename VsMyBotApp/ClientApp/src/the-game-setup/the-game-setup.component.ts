@@ -19,7 +19,11 @@ export class TheGameSetupComponent implements OnInit {
   public MissionFourMembers: PlayerPiece[] = [];
   public MissionFiveMembers: PlayerPiece[] = [];
   public CurrentMission: number = 0;
+  
 
+  public isVotingStage: boolean = false;
+  public chosenTeam: PlayerPiece[] = [];
+  public showVotes: boolean = false;
 
   public gameStarted!: boolean;
   public playerData: PlayerPiece[] = [];
@@ -223,6 +227,28 @@ export class TheGameSetupComponent implements OnInit {
     if (this.CurrentMission == 4) {
       this.MissionFiveMembers = this.MissionFiveMembers.filter((member) => member !== removedPlayer);
     }
+  }
+
+
+
+
+  // Voting Functions
+  public ConfirmTeam = (chosenTeam: PlayerPiece[]) => {
+    
+    this.isVotingStage = true;
+    this.chosenTeam = chosenTeam;
+
+
+  }
+
+  public VoteYes = () => {
+    console.log("voted yes");
+    this.showVotes = true;
+  }
+
+  public VoteNo = () => {
+    console.log("voted no");
+    this.showVotes = true;
   }
 
 
