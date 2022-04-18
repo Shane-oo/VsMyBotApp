@@ -238,11 +238,13 @@ export class TheGameSetupComponent implements OnInit {
     this.isVotingStage = true;
     this.chosenTeam = chosenTeam;
 
-
+    // Send chosen team to backend to decide vote 
   }
 
   public VoteYes = () => {
     console.log("voted yes");
+
+    
     this.showVotes = true;
   }
 
